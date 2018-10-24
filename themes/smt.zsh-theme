@@ -3,8 +3,11 @@
 MODE_INDICATOR="%{$fg_bold[red]%}❮%{$reset_color%}%{$fg[red]%}❮❮%{$reset_color%}"
 local return_status="%{$fg[red]%}%(?..⏎)%{$reset_color%} "
 
-ZSH_THEME_GIT_PROMPT_PREFIX="|"
+# ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+
+ZSH_THEME_GIT_PROMPT_PREFIX=" | %{$fg[magenta]%}\uE0A0 "
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"
+
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg_bold[red]%}⚡%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_AHEAD="%{$fg_bold[red]%}!%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✓%{$reset_color%}"
@@ -79,8 +82,14 @@ function git_time_since_commit() {
     fi
 }
 
-PROMPT='
-%{$fg[blue]%}%m%{$reset_color%} 福 %{$fg[cyan]%}%~ %{$reset_color%}$(git_prompt_short_sha)$(git_prompt_info)
-%{$fg[red]%}%!%{$reset_color%} $(prompt_char) : '
+local return_code="%(?..%F{red}%? ↵%f)"
+local PR_PROMPT='%f➤ %f'
 
-RPROMPT='${return_status}$(git_time_since_commit)$(git_prompt_status)%{$reset_color%}'
+
+PROMPT='╭─%{$fg[blue]%}%m%{$reset_color%} %F{red}➤%f %{$fg[cyan]%}%~ %{$reset_color%}$(git_prompt_short_sha)$(git_prompt_info)
+╰─$PR_PROMPT'
+
+
+
+
+RPROMPT='${return_status}$(git_prompt_status)'
